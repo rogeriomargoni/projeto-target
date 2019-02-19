@@ -11,19 +11,9 @@ public class App
 	{
     public static void main( String[] args )
     	{
+    	
     	try {
-			
-    		Class.forName("org.postgresql.Driver");
-    		
-    		//criação da conecção com o banco de dados
-    		Connection connection = DriverManager.getConnection("jdbc:postgresql://"
-    															+ "ec2-23-21-128-35.compute-1.amazonaws.com:5432" //host
-    															+ "/"
-    															+ "d5k5g3oob6tn20", 
-    															"kxwedtxgcfjgvt", //user
-    															"218b0dd9927d70d198d3f587b28ad32c6dd9cd00ac1c5d33803b8bc982f819e2"); //banco
-
-			System.out.println("Java Connection JDBC." + connection.toString());
+    		FabricaDeConexao fabricaDeConexao = new FabricaDeConexao();
 			
 			//obtenho o statement para manipular a DML
 			Statement statement = connection.createStatement();
@@ -59,6 +49,8 @@ public class App
 			
 			int retorno = statement1.executeUpdate();
 
+			
+			
 			System.out.println(" ");			
 			
 			if (retorno == 1 ) {
@@ -66,6 +58,8 @@ public class App
 			} else {
 				System.out.println("Erro ao gravar dados!");
 			}			
+			
+			
 			
 			System.out.println(" ");
 			
@@ -83,15 +77,25 @@ public class App
 
 			statement.close();
 			statement1.close();
-			connection.close();
+
 			
-			
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    	} catch (SQLException e) {
+				// TODO Auto-generated catch block
+	    		e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally { //// sempre sempre sempre executa o que estiver aqui dentro com erro ou sem erro
+					if (connection  != null) {
+					try {
+						connection.close();
+						System.out.println("");
+						System.out.println("Fechando a conexão");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
     	}
 	}
