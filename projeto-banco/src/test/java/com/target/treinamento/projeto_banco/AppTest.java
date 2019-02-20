@@ -1,38 +1,69 @@
 package com.target.treinamento.projeto_banco;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
+// TDD = TEST DRIVEN DEVELOPMENT
+
+public class AppTest
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+	
+	@Test
+	public void testSomaDoisNumeros() {
+		int valorA = 2;
+		int valorB = 5;
+		
+		int soma = valorA + valorB;
+		
+		assertEquals( 7.0 , soma);
+	}
+	
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+	
+	@Test
+	public void testSomaDoisNumerosEIgualASete() {
+		double valorA = 2;
+		double valorB = 5;
+		
+		Calculadora calculadora = new Calculadora();
+		double soma = calculadora.soma(valorA, valorB);
+		
+		assertEquals( 7.0, soma);
+	}
+	
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
+	@Test
+	public void testSomaDoisNumerosEIgualADez() {
+		double valorA = 5;
+		double valorB = 5;
+		
+		Calculadora calculadora = new Calculadora();
+		double soma = calculadora.soma(valorA, valorB);
+		
+		assertEquals( 10.0 , soma);
+	}
+
+	@Test
+	public void testSomaDoisNumerosComDoubles() {
+		double valorA = 5.0;
+		double valorB = 2.0;
+		
+		Calculadora calculadora = new Calculadora();
+		double soma = calculadora.soma(valorA, valorB);
+		
+		assertEquals( 7.0 , soma);
+	}
+
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSomaDoisNumerosComValoresInvalidos() {
+		double valorB = 2.0;
+		
+		Calculadora calculadora = new Calculadora();
+		double soma = calculadora.soma(null, valorB);
+		
+		assertEquals( 7.0 , soma);
+	}
+	
 }
+    
