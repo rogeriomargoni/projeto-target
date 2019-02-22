@@ -1,64 +1,90 @@
 package com.target.treinamento.projeto_banco;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class App 
-{
-    public static void main( String[] args )
-    {
-    	FabricaDeConexao fabricaDeConexao = new FabricaDeConexao();
-    	fabricaDeConexao.getConexao();
-    	
-        try 
-        {
-        	
-        	//trocar a tabela e campos neste insert por tabela funcionarios        	
-        	
-        	/*String sql = "insert into pessoas(PRIMEIRO_NOME,SEGUNDO_NOME, ENDERECO, CIDADE) "
-					+ "VALUES (?, ?, ?, ?)";
-        					// 1, 2, 3, 3
 
-        	PreparedStatement statement = fabricaDeConexao.getPreparedStatement(sql);
-			statement.setString(1, "Pedrinho");
-			statement.setString(2, "Gerente");
-			statement.setString(3, "20");
-			statement.setString(4, "Lajeado");
+/**
+ * Hello world!
+ *
+ */
+public class App {
+	public static void main(String[] args) {
+
+		Connection connection = null;
+
+		try {
+
+			Class.forName("org.postgresql.Driver");
+
+			// Criação da conexão com o banco de dados
+			connection = DriverManager.getConnection(
+					"jdbc:postgresql://ec2-23-21-128-35.compute-1.amazonaws.com:5432/d5k5g3oob6tn20", "kxwedtxgcfjgvt",
+					"218b0dd9927d70d198d3f587b28ad32c6dd9cd00ac1c5d33803b8bc982f819e2");
+
+			System.out.println("Java connection JDBC." + connection.toString());
+
+			String sql = "insert into pessoas (primeiro_nome, segundo_nome, endereco, cidade) values (?, ?, ? , ?)";
+
+			// Statement statement = connection.createStatement();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, "Java");
+			statement.setString(2, "Developer");
+			statement.setString(3, "Av Java 88");
+			statement.setString(4, "Javaland");
 			int retorno = statement.executeUpdate();
-			
-			if(retorno == 1) {
-				System.out.println("Sucesso!");
+
+			// ResultSet resultSet = statement.executeQuery("select * from pessoas");
+
+			if (retorno == 1) {
+				System.out.println("sucesso");
 			} else {
-				System.out.println("Erro ao gravar dados!");
+				System.out.println("erro ao gravar dados");
 			}
-			*/
-			
-        	
-        	
-        	ResultSet resultSet = fabricaDeConexao.getPreparedStatement("SELECT p.id, p.nome, p.cargo, p.idade, p.salario FROM funcionarios p").executeQuery();
-			
-			while(resultSet.next()) 
-			{
-				String nome    = resultSet.getString("nome");
-				String cargo   = resultSet.getString("cargo");
-				String idade   = resultSet.getString("idade");
-				String salario = resultSet.getString("salario");
-				Long id        = resultSet.getLong("id");
+
+			Statement statement2 = connection.createStatement();
+
+			ResultSet resultSet = statement2.executeQuery("select p.id, p.primeiro_nome, p.segundo_nome, p.endereco, p.cidade from pessoas p");
+			while (resultSet.next()) {
+
+				String primeiroNome = resultSet.getString("primeiro_nome");
+				String segundoNome = resultSet.getString("segundo_nome");
+				String endereco = resultSet.getString("endereco");
+				String cidade = resultSet.getString("cidade");
+				Long id = resultSet.getLong("id");
+
+				System.out.print(primeiroNome + " ");
+				System.out.print(segundoNome + " ");
+				System.out.print(endereco + " ");
+				System.out.print(cidade + " ");
+				System.out.println(id + " ");
+				System.out.println("###########################################");
+
 			}
-			
+
+			statement2.close();
+			// connection.close();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-        
-        //Bloco que sempre será executado, independente de exception ou não.
-        finally 
-        {
-        	fabricaDeConexao.fecharConexao();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				try {
+					connection.close();
+					System.out.println("fechando conexão");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+			}
 		}
-        		
-    }
+	}
 }

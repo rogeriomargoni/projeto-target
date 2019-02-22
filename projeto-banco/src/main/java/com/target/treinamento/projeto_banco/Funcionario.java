@@ -1,15 +1,22 @@
 package com.target.treinamento.projeto_banco;
 
 public class Funcionario {
+//POJO tabela Funcionarios
 	public String nome;
 	public String cargo;
-	public String idade;
-	public String salario;
+	public Integer idade;
+	public Double salario; 
 	public Long id;
 	
 	
-	public Funcionario(String nome, String cargo, String idade, String salario, Long id) {
-		super();
+	
+	
+	public Funcionario() {
+		
+	}
+
+
+	public Funcionario(String nome, String cargo, Integer idade, Double salario, Long id) {
 		this.nome = nome;
 		this.cargo = cargo;
 		this.idade = idade;
@@ -18,53 +25,64 @@ public class Funcionario {
 	}
 
 
-	
 	public String getNome() {
 		return nome;
 	}
+
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	
-	
 
 	public String getCargo() {
 		return cargo;
 	}
+
 
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
 
 
-	
-	public String getIdade() {
+	public Integer getIdade() {
 		return idade;
 	}
 
-	public void setIdade(String idade) {
+
+	public void setIdade(Integer idade) {
 		this.idade = idade;
 	}
 
 
-	
-	public String getSalario() {
+	public Double getSalario() {
 		return salario;
 	}
 
-	public void setSalario(String salario) {
+
+	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
 
-	
 
 	public Long getId() {
 		return id;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Funcionario [nome=" + nome + ", cargo=" + cargo + ", idade=" + idade + ", salario=" + salario + ", id="
+				+ id + "]";
+	}
+	
+	
+	
+	
+	
 }
