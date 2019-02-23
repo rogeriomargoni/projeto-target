@@ -1,26 +1,43 @@
 package com.target.treinamento.projeto_banco;
 
+import java.util.Calendar;
+
 public class Funcionario {
-	public Long    id;
-	public String  nome;
-	public Integer cargo;
-	public Integer idade;
-	public Double  salario; 
+	private Long    id;
+	private String  nome;
+	private Integer cargo;
+	private Integer idade;
+	private Double  salario; 
+	private Calendar DataInclusao;
+
+	
+	public Calendar getDataInclusao() {
+		return DataInclusao;
+	}
+
+	public void setDataInclusao(Calendar dataInclusao) {
+		DataInclusao = dataInclusao;
+	}
+
+	
 
 	public Funcionario() {
 
 	}
 
 	
-	public Funcionario(String nome, Integer cargo, Integer idade, Double salario, Long id) {
+
+	public Funcionario(Long id, String nome, Integer cargo, Integer idade, Double salario, Calendar dataInclusao) {
+		super();
+		this.id = id;
 		this.nome = nome;
 		this.cargo = cargo;
 		this.idade = idade;
 		this.salario = salario;
-		this.id = id;
+		DataInclusao = dataInclusao;
 	}
 
-
+	
 	public String getNome() {
 		return nome;
 	}
