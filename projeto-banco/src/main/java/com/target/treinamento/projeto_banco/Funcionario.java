@@ -2,14 +2,64 @@ package com.target.treinamento.projeto_banco;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ManyToAny;
+
+import com.target.treinamento.projeto_banco.dominio.Banco;
+
+
+@Entity                        // Eu sou uma persinstence class
+@Table(name = "FUNCIONARIOS")  //quero que crie uma tabela , ou mapeie com este nome
 public class Funcionario {
+
+	@Id
+	@Column(name="ID")  // fixar o nome do campo
+	@SequenceGenerator(name="geradorDeId", sequenceName= "funcionarios_id_seq", allocationSize=1)
+	@GeneratedValue(generator="geradorDeId")
 	private Long    id;
+	
+	@Column(name="NOME")			// fixar o nome do campo, se necessario alterar campo trocar aqui, 
+									//sem precisar mexer na proxima linha abaixo 
 	private String  nome;
+	
+	@Column(name="CARGO")			
 	private Integer cargo;
+	
+	public Banco getBanco() {
+		return banco;
+	}
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
+	}
+
+
+	@Column(name="IDADE")			
 	private Integer idade;
-	private Double  salario; 
+	
+	@Column(name="SALARIO")			
+	private Double  salario;
+	
+	@Column(name="DATA_INCLUSAO")	
+	@Temporal(TemporalType.DATE)	// determinar o modelo de data que vamos ter  ex: HH:MM:SS
 	private Calendar DataInclusao;
 
+	
+	@JoinColumn(name="ID_BANCO")
+	@ManyToOne
+	private Banco banco;
+	
+	
 	
 	public Calendar getDataInclusao() {
 		return DataInclusao;
@@ -24,8 +74,6 @@ public class Funcionario {
 	public Funcionario() {
 
 	}
-
-	
 
 	public Funcionario(Long id, String nome, Integer cargo, Integer idade, Double salario, Calendar dataInclusao) {
 		super();
@@ -82,6 +130,9 @@ public class Funcionario {
 		this.id = id;
 	}
 
+	
+	
+	
 	
 	@Override
 	public int hashCode() {
